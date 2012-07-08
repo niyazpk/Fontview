@@ -28,25 +28,23 @@ class Frame(wx.Frame):
         self.SetMenuBar(menuBar)
 
     def OnPaint(self, event):
-        image = wx.Image('Photo.jpg')
-        bm = wx.BitmapFromImage(image)
+        PILimage = Image.new("RGB", (600, 100), (255,255,255))
+        draw = ImageDraw.Draw(PILimage)
+        defaultFont = ImageFont.truetype("arial.ttf", 14)
+        font = ImageFont.truetype("ArnoPro-BoldSmText.otf", 20)
+
+        draw.text((10, 30), "The quick brown fox jumps over the lazy dog", font=font, fill="#000")
+        draw.text((10, 0), "The quick brown fox jumps over the lazy dog", font=defaultFont, fill="#000")
         bg = wx.PaintDC(self)
         bg.DrawBitmap(PilImageToWxBitmap(PILimage), 0, 0)
 
     def OnClose(self, event):
         self.Destroy()
 
-
 app = wx.App(False)  # Create a new app, don't redirect stdout/stderr to a window.
 frame = Frame("Hello World") # A Frame is a top-level window.
 frame.Show(True)     # Show the frame.
 
-PILimage = Image.new("RGB", (600, 100), (255,255,255))
-draw = ImageDraw.Draw(PILimage)
-defaultFont = ImageFont.truetype("arial.ttf", 14)
-font = ImageFont.truetype("ArnoPro-BoldSmText.otf", 20)
 
-draw.text((10, 30), "The quick brown fox jumps over the lazy dog", font=font, fill="#000")
-draw.text((10, 0), "The quick brown fox jumps over the lazy dog", font=defaultFont, fill="#000")
 
 app.MainLoop()
